@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Screen Capture OCR to GPT",
+  "version": "1.0",
+  "description": "Capture screen, perform OCR, and send to GPT-4.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "clipboardWrite"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "jquery.min.js",
+        "content.js"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://api.ocr.space/*",
+    "https://api.openai.com/*"
+  ],
+  "icons": {
+    "48": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon.png"
+    }
+  },
+  "commands": {
+    "start_answering_process": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Start answering process"
+    }
+  }
+}
+
