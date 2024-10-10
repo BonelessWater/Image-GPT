@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Screen Capture OCR to GPT",
+  "name": "Image GPT Mini",
   "version": "1.0",
-  "description": "Capture screen, perform OCR, and send to GPT-4.",
+  "description": "Capture screen, perform OCR, and send to GPT-4 wtih custom prompt.",
   "permissions": [
     "activeTab",
     "scripting",
+    "storage",
     "clipboardWrite"
   ],
   "background": {

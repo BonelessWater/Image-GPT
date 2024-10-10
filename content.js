@@ -6,6 +6,18 @@ function removeCodeBlockMarkers(responseText) {
   return responseText.replace(/```[a-zA-Z]*\n([\s\S]*?)```/g, '$1').trim();
 }
 
+let systemPrompt = 'You are a programmer. You are quick and efficient, only providing answers without explanations. I will provide instructions to a coding problem and your job will be to respond with its answer. Do not explain anything, just reply with code. If the input includes leetcode, your response must include class Solution(object): and a function inside. If the input appears to be a multiple choice question, reply with letters corresponding to their respective order.' ; // Default system prompt
+
+// Load the system prompt from chrome.storage
+chrome.storage.local.get('systemPrompt', (data) => {
+  if (data.systemPrompt) {
+    systemPrompt = data.systemPrompt;
+    console.log('Loaded system prompt:', systemPrompt);
+  } else {
+    console.log('Using default prompt');
+  }
+});
+
 // Listen for messages from the popup or background script
 chrome.runtime.onMessage.addListener((request) => {
   if (request.action === "screen_sharing_started") {
@@ -41,7 +53,7 @@ function captureFullScreen() {
     // Convert the canvas to a Blob (image file)
     canvas.toBlob((blob) => {
       processCapturedImage(blob);
-    }, 'image/png');
+    }, 'image/jpeg', 0.7);
   };
 }
 
@@ -107,7 +119,7 @@ async function sendToGPT4(inputText) {
         messages: [
           {
             role: 'system',
-            content: 'You are a programmer. You are quick and efficient, only providing answers without explanations. I will provide instructions to a coding problem and your job will be to respond with its answer. Do not explain anything, just reply with code. If the input includes leetcode, your response must include class Solution(object): and a function inside. If the input appears to be a multiple choice question, reply with letters corresponding to their respective order.'
+            content: systemPrompt
           },
           {
             role: 'user',
@@ -141,6 +153,7 @@ async function sendToGPT4(inputText) {
     try {
       await navigator.clipboard.writeText(gptResponse);
       console.log('GPT-4 response copied to clipboard.');
+       
     } catch (clipboardError) {
       console.error('Failed to copy GPT-4 response to clipboard:', clipboardError);
     }

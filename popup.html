@@ -2,18 +2,37 @@
 <html>
 <head>
   <title>Screen Capture</title>
+  <!-- Materialize CSS CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
   <style>
     body {
-      width: 200px;
-      height: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 300px;
+      height: 250px;
+      padding: 20px;
+    }
+    .container {
+      margin-top: 20px;
+    }
+    #systemPrompt {
+      height: 150px;
     }
   </style>
 </head>
 <body>
-  <button id="startCapture">Start Screen Capture</button>
+  <div class="container">
+    <h5>Image GPT Mini</h5>
+    <div class="input-field">
+      <textarea id="systemPrompt" class="materialize-textarea" placeholder="Enter system prompt for GPT-4..."></textarea>
+      <label for="systemPrompt"></label>
+    </div>
+    <div class="center">
+      <button id="savePrompt" class="waves-effect waves-light btn">Save Prompt</button>
+      <button id="startCapture" class="waves-effect waves-light btn blue">Start Screen Sharing</button>
+    </div>
+  </div>
+
+  <!-- Materialize JS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
